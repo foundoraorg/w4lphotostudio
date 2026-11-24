@@ -225,14 +225,8 @@ export function BookingDrawer() {
                   {items.map((item) => (
                     <li key={item.key} className="flex gap-3 border border-ink/15 bg-page p-3">
                       <PrintImage
-                        crop={
-                          data.sessions.find((session) => session.id === item.sessionId)?.image_crop ?? {
-                            x: 0,
-                            y: 0,
-                            w: 1 / 3,
-                            h: 1 / 3,
-                          }
-                        }
+                        session={data.sessions.find((session) => session.id === item.sessionId)}
+                        crop={{ x: 0, y: 0, w: 1 / 3, h: 1 / 3 }}
                         alt={`${item.title} session`}
                         className="h-[86px] w-16 shrink-0"
                       />

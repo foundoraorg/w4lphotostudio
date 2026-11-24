@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import type { ImageCrop, Session } from "../../lib/config";
 import { money, type Currency } from "../../lib/format";
+import { coverCanvas, imageUrl, loadPhoto, normaliseFocus } from "../../lib/images";
 import { loadSheet } from "../../lib/portfolio";
 import {
   INNER_COUNT,
@@ -275,6 +276,32 @@ export async function buildGalleryScene(
     printMaterials.set(index, track(new THREE.MeshBasicMaterial({ map: texture })));
   }
 
+  // Real photographs replace their sheet cell once loaded. Until then the print
+  // shows the cell, and a missing or broken file leaves it in place.
+  let disposed = false;
+  const printAspect = PRINT_WIDTH / PRINT_HEIGHT;
+  for (let index = 0; index < 9; index += 1) {
+    const session = sessions[index];
+    const file = session?.image?.trim();
+    const material = printMaterials.get(index);
+    if (!session || !file || !material) continue;
+    void loadPhoto(imageUrl(file))
+      .then((photo) => {
+        if (disposed || !material) return;
+        const texture = new THREE.CanvasTexture(coverCanvas(photo, printAspect, normaliseFocus(session.image_focus), 1024));
+        texture.colorSpace = THREE.SRGBColorSpace;
+        texture.anisotropy = anisotropy;
+        track(texture);
+        const previous = material.map;
+        material.map = texture;
+        material.needsUpdate = true;
+        previous?.dispose();
+      })
+      .catch(() => {
+        /* keep the sheet cell */
+      });
+  }
+
   const labelMaterials = new Map<number, THREE.MeshBasicMaterial>();
   for (let index = 0; index < 9; index += 1) {
     const session = sessions[index];
@@ -350,6 +377,7 @@ export async function buildGalleryScene(
     prints,
     updateLabels,
     dispose: () => {
+      disposed = true;
       for (const item of disposables) item.dispose();
       printTextures.clear();
       labelMaterials.clear();

@@ -10,7 +10,7 @@ export function SessionCard({ session, priority = false }: { session: Session; p
     <Link to={`/sessions/${session.slug}`} className="group flex h-full flex-col">
       <div className="relative overflow-hidden bg-drawer">
         <PrintImage
-          crop={session.image_crop}
+          session={session}
           alt={`${session.title} — ${session.category} photography session`}
           className="aspect-[4/5] w-full transition-transform duration-700 group-hover:scale-[1.03]"
           sizes={priority ? "(min-width: 1024px) 33vw, 50vw" : undefined}

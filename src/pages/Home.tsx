@@ -5,6 +5,7 @@ import { GalleryCanvas, type GalleryHandle } from "../components/gallery3d/Galle
 import { useFlyer } from "../components/gallery3d/FlyerContext";
 import { Lockup } from "../components/Lockup";
 import { PrintImage } from "../components/ui/PrintImage";
+import { sessionImage } from "../lib/images";
 import { Reveal } from "../components/ui/Reveal";
 import { useCatalogue } from "../lib/catalogue";
 import type { Session } from "../lib/config";
@@ -60,7 +61,7 @@ export function Home() {
 
   const openSession = (session: Session, rect: DOMRect) => {
     startFlyer({
-      crop: session.image_crop,
+      image: sessionImage(session),
       from: { left: rect.left, top: rect.top, width: rect.width, height: rect.height },
     });
     navigate(`/sessions/${session.slug}`, { state: { flyer: true } });
@@ -80,7 +81,7 @@ export function Home() {
               {sessions.map((session) => (
                 <Link key={session.id} to={`/sessions/${session.slug}`} className="group">
                   <PrintImage
-                    crop={session.image_crop}
+                    session={session}
                     alt={`${session.title} — ${session.category} session photograph`}
                     className="aspect-[3/4] w-full"
                   />
@@ -258,7 +259,7 @@ export function Home() {
               <Link key={session.id} to={`/sessions/${session.slug}`} className="group block">
                 <div className="overflow-hidden">
                   <PrintImage
-                    crop={session.image_crop}
+                    session={session}
                     alt={`${session.title} session`}
                     className="aspect-[4/5] w-full transition-transform duration-700 group-hover:scale-[1.03]"
                   />

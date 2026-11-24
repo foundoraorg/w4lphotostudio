@@ -142,7 +142,7 @@ function SessionView({ session }: { session: Session }) {
             data-flyer-target
           >
             <PrintImage
-              crop={session.image_crop}
+              session={session}
               alt={`${session.title} — ${session.category} photography by W4L Studios`}
               className="aspect-[4/5] w-full"
             />
@@ -223,7 +223,7 @@ function SessionView({ session }: { session: Session }) {
           {others.map((item) => (
             <Link key={item.id} to={`/sessions/${item.slug}`} className="group">
               <PrintImage
-                crop={item.image_crop}
+                session={item}
                 alt={`${item.title} session`}
                 className="aspect-[4/5] w-full transition-transform duration-500 group-hover:scale-[1.02]"
               />

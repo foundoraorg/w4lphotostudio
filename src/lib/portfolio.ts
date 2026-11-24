@@ -1,7 +1,11 @@
 import type { CSSProperties } from "react";
 import type { ImageCrop } from "./config";
 
-/** Drop the real 3 x 3 portfolio sheet here (1744 x 2336) and it is used everywhere. */
+/**
+ * The optional 3 x 3 sheet at public/portfolio-sheet.jpg (1744 x 2336), cropped
+ * per session through `image_crop`. Per-session photographs take precedence and
+ * this is their fallback — see docs/IMAGES.md.
+ */
 export const SHEET_URL = `${import.meta.env.BASE_URL}portfolio-sheet.jpg`;
 export const SHEET_WIDTH = 1744;
 export const SHEET_HEIGHT = 2336;
@@ -134,7 +138,7 @@ export function loadSheet(url: string = SHEET_URL): Promise<HTMLImageElement | H
   return sheetPromise;
 }
 
-/** CSS crop of the 3 x 3 sheet, matching the three.js texture crop. */
+/** CSS crop of the 3 x 3 sheet cell, matching the three.js texture crop. */
 export function cropStyle(crop: ImageCrop, url: string | null = placeholderSheetUrl()): CSSProperties {
   return {
     backgroundImage: url ? `url("${url}")` : undefined,

@@ -22,6 +22,12 @@ export interface ImageCrop {
   h: number;
 }
 
+/** Focal point inside a photograph, both values 0–1 from the top-left corner. */
+export interface ImageFocus {
+  x: number;
+  y: number;
+}
+
 export interface Session {
   id: string;
   slug: string;
@@ -32,6 +38,12 @@ export interface Session {
   base_duration_min: number;
   included_edits: number;
   image_crop: ImageCrop;
+  /** File name inside public/images/sessions, or an absolute URL. See docs/IMAGES.md. */
+  image?: string;
+  /** Alt text for the photograph. Falls back to the session title. */
+  image_alt?: string;
+  /** Point of the photograph to keep in frame (0–1, from the top-left). Default 0.5 / 0.45. */
+  image_focus?: ImageFocus;
   sort_order: number;
   active: boolean;
 }

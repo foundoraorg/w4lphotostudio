@@ -1,9 +1,10 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type CSSProperties, type ReactNode } from "react";
-import type { ImageCrop } from "../../lib/config";
+import type { SessionImage } from "../../lib/images";
+import { focusStyle } from "../../lib/images";
 import { cropStyle, loadSheet, placeholderSheetUrl } from "../../lib/portfolio";
 
 interface FlyerPayload {
-  crop: ImageCrop;
+  image: SessionImage;
   from: { left: number; top: number; width: number; height: number };
 }
 
@@ -33,7 +34,13 @@ export function FlyerProvider({ children }: { children: ReactNode }) {
   return (
     <FlyerContext.Provider value={value}>
       {children}
-      {payload && <FlyerLayer key={`${payload.crop.x}-${payload.crop.y}-${payload.from.left}`} payload={payload} onDone={finish} />}
+      {payload && (
+        <FlyerLayer
+          key={`${payload.image.url ?? `${payload.image.crop.x}-${payload.image.crop.y}`}-${payload.from.left}`}
+          payload={payload}
+          onDone={finish}
+        />
+      )}
     </FlyerContext.Provider>
   );
 }
@@ -42,6 +49,7 @@ function FlyerLayer({ payload, onDone }: { payload: FlyerPayload; onDone: () => 
   const [rect, setRect] = useState(payload.from);
   const [moving, setMoving] = useState(false);
   const [sheet, setSheet] = useState<string>(placeholderSheetUrl());
+  const { image } = payload;
 
   useEffect(() => {
     let alive = true;
@@ -80,13 +88,17 @@ function FlyerLayer({ payload, onDone }: { payload: FlyerPayload; onDone: () => 
     top: rect.top,
     width: rect.width,
     height: rect.height,
-    ...cropStyle(payload.crop, sheet),
+    ...(image.url ? {} : cropStyle(image.crop, sheet)),
     transition: moving
       ? "left 300ms cubic-bezier(.25,.75,.25,1), top 300ms cubic-bezier(.25,.75,.25,1), width 300ms cubic-bezier(.25,.75,.25,1), height 300ms cubic-bezier(.25,.75,.25,1)"
       : "none",
   };
 
-  return <div className="flyer" style={style} aria-hidden="true" />;
+  return (
+    <div className="flyer" style={style} aria-hidden="true">
+      {image.url ? <img src={image.url} alt="" className="h-full w-full object-cover" style={focusStyle(image.focus)} /> : null}
+    </div>
+  );
 }
 
 export function useFlyer(): FlyerValue {

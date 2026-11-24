@@ -51,7 +51,7 @@ export function Studio() {
           <div ref={parallax} className="absolute -inset-y-[12%] inset-x-0 scale-105">
             {heroSession && (
               <PrintImage
-                crop={heroSession.image_crop}
+                session={heroSession}
                 alt={`${heroSession.title} at W4L Studios`}
                 className="h-full w-full"
               />
