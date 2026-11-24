@@ -1,0 +1,425 @@
+{
+  "sessions": [
+    {
+      "id": "studio-portrait",
+      "slug": "studio-portrait",
+      "title": "Studio Portrait",
+      "category": "Portrait",
+      "description": "A quiet, light-filled hour of portraits that make you look like the most rested version of yourself. Edited, retouched and delivered in a private online gallery.",
+      "base_price_kes": 7500,
+      "base_duration_min": 60,
+      "included_edits": 10,
+      "image_crop": {
+        "x": 0,
+        "y": 0,
+        "w": 0.3333333333333333,
+        "h": 0.3333333333333333
+      },
+      "sort_order": 1,
+      "active": true
+    },
+    {
+      "id": "family-story",
+      "slug": "family-story",
+      "title": "Family Story",
+      "category": "Family",
+      "description": "Ninety minutes for the whole family to be in one frame, gently directed and never stiff. Edited, retouched and delivered in a private online gallery.",
+      "base_price_kes": 12000,
+      "base_duration_min": 90,
+      "included_edits": 10,
+      "image_crop": {
+        "x": 0.3333333333333333,
+        "y": 0,
+        "w": 0.3333333333333333,
+        "h": 0.3333333333333333
+      },
+      "sort_order": 2,
+      "active": true
+    },
+    {
+      "id": "couples-engagement",
+      "slug": "couples-engagement",
+      "title": "Couples & Engagement",
+      "category": "Couples",
+      "description": "A warm, unhurried session built around the way the two of you actually move together. Edited, retouched and delivered in a private online gallery.",
+      "base_price_kes": 10000,
+      "base_duration_min": 90,
+      "included_edits": 10,
+      "image_crop": {
+        "x": 0.6666666666666666,
+        "y": 0,
+        "w": 0.3333333333333333,
+        "h": 0.3333333333333333
+      },
+      "sort_order": 3,
+      "active": true
+    },
+    {
+      "id": "corporate-headshots",
+      "slug": "corporate-headshots",
+      "title": "Corporate Headshots",
+      "category": "Business",
+      "description": "Clean, consistent headshots for a team or a single founder, shot against paper or in your own office. Edited, retouched and delivered in a private online gallery.",
+      "base_price_kes": 6000,
+      "base_duration_min": 45,
+      "included_edits": 10,
+      "image_crop": {
+        "x": 0,
+        "y": 0.3333333333333333,
+        "w": 0.3333333333333333,
+        "h": 0.3333333333333333
+      },
+      "sort_order": 4,
+      "active": true
+    },
+    {
+      "id": "product-packshot",
+      "slug": "product-packshot",
+      "title": "Product & Packshot",
+      "category": "Commercial",
+      "description": "Studio-lit product frames for shelves, decks and storefronts, with styling and backdrop changes built into the time. Edited, retouched and delivered in a private online gallery.",
+      "base_price_kes": 15000,
+      "base_duration_min": 120,
+      "included_edits": 10,
+      "image_crop": {
+        "x": 0.3333333333333333,
+        "y": 0.3333333333333333,
+        "w": 0.3333333333333333,
+        "h": 0.3333333333333333
+      },
+      "sort_order": 5,
+      "active": true
+    },
+    {
+      "id": "fashion-editorial",
+      "slug": "fashion-editorial",
+      "title": "Fashion & Editorial",
+      "category": "Fashion",
+      "description": "A full editorial block with lighting setups, looks and a shot list built for publication or campaign. Edited, retouched and delivered in a private online gallery.",
+      "base_price_kes": 25000,
+      "base_duration_min": 180,
+      "included_edits": 10,
+      "image_crop": {
+        "x": 0.6666666666666666,
+        "y": 0.3333333333333333,
+        "w": 0.3333333333333333,
+        "h": 0.3333333333333333
+      },
+      "sort_order": 6,
+      "active": true
+    },
+    {
+      "id": "maternity-glow",
+      "slug": "maternity-glow",
+      "title": "Maternity Glow",
+      "category": "Maternity",
+      "description": "Soft, sculpted maternity portraits with room to change looks and breathe between frames. Edited, retouched and delivered in a private online gallery.",
+      "base_price_kes": 11000,
+      "base_duration_min": 90,
+      "included_edits": 10,
+      "image_crop": {
+        "x": 0,
+        "y": 0.6666666666666666,
+        "w": 0.3333333333333333,
+        "h": 0.3333333333333333
+      },
+      "sort_order": 7,
+      "active": true
+    },
+    {
+      "id": "kids-newborn",
+      "slug": "kids-newborn",
+      "title": "Kids & Newborn",
+      "category": "Kids",
+      "description": "Patience-first photography for small people, with props, blankets and plenty of time to settle. Edited, retouched and delivered in a private online gallery.",
+      "base_price_kes": 9000,
+      "base_duration_min": 60,
+      "included_edits": 10,
+      "image_crop": {
+        "x": 0.3333333333333333,
+        "y": 0.6666666666666666,
+        "w": 0.3333333333333333,
+        "h": 0.3333333333333333
+      },
+      "sort_order": 8,
+      "active": true
+    },
+    {
+      "id": "brand-content-day",
+      "slug": "brand-content-day",
+      "title": "Brand & Content Day",
+      "category": "Brand",
+      "description": "A full production day covering stills, details and a vertical reel for one brand story. Edited, retouched and delivered in a private online gallery.",
+      "base_price_kes": 35000,
+      "base_duration_min": 240,
+      "included_edits": 10,
+      "image_crop": {
+        "x": 0.6666666666666666,
+        "y": 0.6666666666666666,
+        "w": 0.3333333333333333,
+        "h": 0.3333333333333333
+      },
+      "sort_order": 9,
+      "active": true
+    }
+  ],
+  "pricingConfig": {
+    "durationOptions": [
+      {
+        "id": "base",
+        "label": "Base duration",
+        "factor": 1,
+        "addMinutes": 0
+      },
+      {
+        "id": "plus30",
+        "label": "+ 30 minutes",
+        "factor": 1.25,
+        "addMinutes": 30
+      },
+      {
+        "id": "plus60",
+        "label": "+ 1 hour",
+        "factor": 1.5,
+        "addMinutes": 60
+      },
+      {
+        "id": "halfDay",
+        "label": "Half day",
+        "factor": 2.5,
+        "addMinutes": 180
+      },
+      {
+        "id": "fullDay",
+        "label": "Full day",
+        "factor": 4,
+        "addMinutes": 420
+      }
+    ],
+    "peopleBands": [
+      {
+        "id": "one",
+        "label": "1 person",
+        "min": 1,
+        "max": 1,
+        "factor": 1
+      },
+      {
+        "id": "two",
+        "label": "2 people",
+        "min": 2,
+        "max": 2,
+        "factor": 1.1
+      },
+      {
+        "id": "three-five",
+        "label": "3-5 people",
+        "min": 3,
+        "max": 5,
+        "factor": 1.25
+      },
+      {
+        "id": "six-ten",
+        "label": "6-10 people",
+        "min": 6,
+        "max": 10,
+        "factor": 1.5
+      },
+      {
+        "id": "ten-plus",
+        "label": "10+ people",
+        "min": 11,
+        "max": 99,
+        "factor": 1.8
+      }
+    ],
+    "editRate": 300,
+    "includedEdits": 10,
+    "editOptions": [
+      10,
+      20,
+      30,
+      50
+    ],
+    "addOns": [
+      {
+        "id": "hmua",
+        "label": "Hair & make-up",
+        "price": 6000,
+        "blurb": "Artist on set for the session."
+      },
+      {
+        "id": "wardrobe",
+        "label": "Wardrobe styling",
+        "price": 5000,
+        "blurb": "Looks pulled and steamed before you arrive."
+      },
+      {
+        "id": "backdrop",
+        "label": "Extra backdrop",
+        "price": 1500,
+        "blurb": "A second paper or hand-painted ground."
+      },
+      {
+        "id": "prints",
+        "label": "Prints & album",
+        "price": 8000,
+        "blurb": "A 20-page linen album with ten prints."
+      },
+      {
+        "id": "reel",
+        "label": "Short video reel",
+        "price": 10000,
+        "blurb": "A 30-second vertical cut for social."
+      }
+    ],
+    "rush": {
+      "id": "rush",
+      "label": "Rush delivery (48 h)",
+      "price": 0,
+      "multiplier": 1.25,
+      "blurb": "Your gallery within two working days."
+    },
+    "locations": [
+      {
+        "id": "studio",
+        "label": "Studio",
+        "fee": 0
+      },
+      {
+        "id": "watamu",
+        "label": "Watamu",
+        "fee": 3000
+      },
+      {
+        "id": "kilifi",
+        "label": "Kilifi",
+        "fee": 4000
+      },
+      {
+        "id": "malindi",
+        "label": "Malindi",
+        "fee": 5000
+      },
+      {
+        "id": "mombasa",
+        "label": "Mombasa",
+        "fee": 6000
+      },
+      {
+        "id": "beach",
+        "label": "Outdoor / beach",
+        "fee": 3500
+      }
+    ],
+    "rushMultiplier": 1.25,
+    "depositPercent": 0.3,
+    "usdRate": 129
+  },
+  "blockedDates": [],
+  "testimonials": [
+    {
+      "id": "t1",
+      "quote": "They shot our family of nine without a single meltdown, and the gallery landed two days early.",
+      "name": "Achieng O.",
+      "session": "Family Story"
+    },
+    {
+      "id": "t2",
+      "quote": "Warm room, sharp light, and I actually liked how I looked. That is not a small thing.",
+      "name": "Daniel M.",
+      "session": "Studio Portrait"
+    },
+    {
+      "id": "t3",
+      "quote": "Our brand day produced a quarter of content in one afternoon. The reel alone paid for itself.",
+      "name": "Sasha K.",
+      "session": "Brand & Content Day"
+    },
+    {
+      "id": "t4",
+      "quote": "Forty headshots for the team, all consistent. Nobody was left looking awkward or over-lit.",
+      "name": "Foundora Studio",
+      "session": "Corporate Headshots"
+    },
+    {
+      "id": "t5",
+      "quote": "The maternity session felt unhurried. I came back for newborn photographs three weeks later.",
+      "name": "Neema W.",
+      "session": "Maternity Glow"
+    }
+  ],
+  "faqs": [
+    {
+      "id": "f1",
+      "q": "Where is the studio?",
+      "a": "We are on Turtle Bay Road in Watamu, a short walk from the bay. Parking and a changing room are included, and we shoot on location across the coast on request."
+    },
+    {
+      "id": "f2",
+      "q": "How do I confirm a date?",
+      "a": "Choose a session, pick a date and a slot, and pay the 30% deposit. Your reference code arrives immediately and the date is held for you."
+    },
+    {
+      "id": "f3",
+      "q": "When do I get the photographs?",
+      "a": "A private online gallery is delivered within seven working days, or within 48 hours with rush delivery. Edited photographs are selected with you before retouching."
+    },
+    {
+      "id": "f4",
+      "q": "Can we reschedule?",
+      "a": "Yes, once, free of charge, up to 72 hours before the session. Inside 72 hours the deposit moves to a future date if the studio can fill the slot."
+    },
+    {
+      "id": "f5",
+      "q": "Do you travel?",
+      "a": "We cover Watamu, Kilifi, Malindi, Mombasa and the outdoor and beach locations shown in the estimator. Travel beyond that is quoted separately after we review your brief."
+    },
+    {
+      "id": "f6",
+      "q": "What should we wear?",
+      "a": "Bring two or three options in neutral tones and let us see them when you arrive. Hair and make-up, wardrobe styling and an extra backdrop can be added to any session."
+    }
+  ],
+  "settings": {
+    "name": "W4L Studios",
+    "partner": "Foundora",
+    "tagline": "Find better. Live smarter.",
+    "partnerUrl": "https://foundora-si.vercel.app/",
+    "address": "Turtle Bay Road, Watamu, Kilifi County, Kenya",
+    "phone": "+254 722 000 145",
+    "whatsapp": "254722000145",
+    "email": "hello@w4lstudios.co.ke",
+    "hours": [
+      {
+        "days": "Monday to Friday",
+        "time": "08:00 - 18:00"
+      },
+      {
+        "days": "Saturday",
+        "time": "09:00 - 16:00"
+      },
+      {
+        "days": "Sunday",
+        "time": "By appointment"
+      }
+    ],
+    "socials": [
+      {
+        "label": "Instagram",
+        "handle": "@w4lstudios",
+        "url": "https://instagram.com/w4lstudios"
+      },
+      {
+        "label": "Behance",
+        "handle": "w4lstudios",
+        "url": "https://www.behance.net/w4lstudios"
+      },
+      {
+        "label": "Pinterest",
+        "handle": "w4lstudios",
+        "url": "https://pinterest.com/w4lstudios"
+      }
+    ]
+  }
+}
