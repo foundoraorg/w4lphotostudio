@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight } from "../components/Icons";
 import { GalleryCanvas, type GalleryHandle } from "../components/gallery3d/GalleryCanvas";
 import { useFlyer } from "../components/gallery3d/FlyerContext";
-import { Lockup } from "../components/Lockup";
+import { OpeningHero } from "../components/opening/OpeningHero";
 import { PrintImage } from "../components/ui/PrintImage";
 import { sessionImage } from "../lib/images";
 import { Reveal } from "../components/ui/Reveal";
@@ -12,8 +12,6 @@ import type { Session } from "../lib/config";
 import { useCurrency } from "../lib/currency";
 import { useMediaQuery } from "../lib/hooks";
 import { formatDurationLabel } from "../lib/pricing";
-
-const INTRO_KEY = "w4l.intro.seen";
 
 export function Home() {
   const { sessions } = useCatalogue();
@@ -24,38 +22,6 @@ export function Home() {
   const reduced = useMediaQuery("(prefers-reduced-motion: reduce)");
   const [mode, setMode] = useState<"gallery" | "sessions">("gallery");
   const [failed, setFailed] = useState(false);
-  const [playIntro, setPlayIntro] = useState(() => {
-    try {
-      return !sessionStorage.getItem(INTRO_KEY);
-    } catch {
-      return false;
-    }
-  });
-  const [veil, setVeil] = useState(() => playIntro && !reduced);
-  const [veilFading, setVeilFading] = useState(false);
-
-  useEffect(() => {
-    if (!veil) return;
-    const fade = window.setTimeout(() => setVeilFading(true), 900);
-    const end = window.setTimeout(() => {
-      setVeil(false);
-      setPlayIntro(false);
-      try {
-        sessionStorage.setItem(INTRO_KEY, "1");
-      } catch {
-        /* private mode */
-      }
-    }, 1800);
-    const failsafe = window.setTimeout(() => {
-      setVeil(false);
-      setPlayIntro(false);
-    }, 4000);
-    return () => {
-      window.clearTimeout(fade);
-      window.clearTimeout(end);
-      window.clearTimeout(failsafe);
-    };
-  }, [veil]);
 
   const showGrid = mode === "sessions" || reduced || failed;
 
@@ -67,10 +33,10 @@ export function Home() {
     navigate(`/sessions/${session.slug}`, { state: { flyer: true } });
   };
 
-  const introDelay = (step: number) => (playIntro ? 1150 + step * 60 : 0);
-
   return (
     <>
+      <OpeningHero />
+
       <section
         className="relative h-[calc(100svh-4rem)] min-h-[540px] overflow-hidden bg-wall lg:h-[calc(100svh-72px)]"
         aria-label="Gallery passage"
@@ -105,7 +71,7 @@ export function Home() {
           <GalleryCanvas
             ref={gallery}
             sessions={sessions}
-            intro={playIntro}
+            intro={false}
             onOpen={openSession}
             onFail={() => setFailed(true)}
           />
@@ -160,27 +126,16 @@ export function Home() {
             <div className="flex flex-col items-start justify-between gap-6 px-5 pb-8 sm:px-8 lg:flex-row lg:items-end lg:px-12 lg:pb-24">
               <div className="max-w-full min-w-0">
                 <div className="overflow-hidden">
-                  <p
-                    className={`kicker ${playIntro ? "intro-line" : ""}`}
-                    style={{ animationDelay: `${introDelay(0)}ms` }}
-                  >
-                    You are walking past
-                  </p>
+                  <p className="kicker intro-line">You are walking past</p>
                 </div>
                 <div className="mt-2 overflow-hidden">
-                  <h1
-                    className={`display-hero text-ink ${playIntro ? "intro-line" : ""}`}
-                    style={{ animationDelay: `${introDelay(1)}ms` }}
-                  >
-                    The light works
-                  </h1>
+                  <h2 className="display-hero text-ink intro-line">The light works</h2>
                 </div>
                 <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
                   <div className="overflow-hidden">
                     <Link
                       to="/sessions"
-                      className={`link-underline text-ink ${playIntro ? "intro-line" : ""}`}
-                      style={{ animationDelay: `${introDelay(2)}ms` }}
+                      className="link-underline text-ink intro-line"
                     >
                       See sessions &amp; prices <ArrowRight size={14} />
                     </Link>
@@ -188,8 +143,7 @@ export function Home() {
                   <div className="overflow-hidden">
                     <Link
                       to="/estimate"
-                      className={`link-underline text-ink ${playIntro ? "intro-line" : ""}`}
-                      style={{ animationDelay: `${introDelay(3)}ms` }}
+                      className="link-underline text-ink intro-line"
                     >
                       Get a quick estimate
                     </Link>
@@ -201,10 +155,7 @@ export function Home() {
               </div>
               <div className="shrink-0 overflow-hidden">
                 <p
-                  className={`hidden font-mono text-[10px] uppercase leading-relaxed tracking-[0.12em] text-ink/60 lg:block ${
-                    playIntro ? "intro-line" : ""
-                  }`}
-                  style={{ animationDelay: `${introDelay(4)}ms` }}
+                  className="hidden font-mono text-[10px] uppercase leading-relaxed tracking-[0.12em] text-ink/60 lg:block intro-line"
                 >
                   W4L Studios · Watamu
                   <br />
@@ -295,17 +246,6 @@ export function Home() {
           </div>
         </div>
       </section>
-
-      {veil && (
-        <div className={`veil ${veilFading ? "veil-fading" : ""}`} aria-hidden="true">
-          <div className="flex flex-col items-center gap-7 px-8">
-            <Lockup dark size="lg" />
-            <div className="relative h-[2px] w-[min(320px,62vw)] overflow-hidden bg-wall/15">
-              <div className="veil-hairline" />
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 }

@@ -1,0 +1,253 @@
+/*
+ * W4L Studios opening hero.
+ *
+ * Everything is scoped to .op. Colour and type come from the site's own
+ * design system (wall / page / ink / accent / bronze, Oswald + DM Mono), so
+ * the hero reads as part of the studio site rather than a borrowed template.
+ */
+
+.op {
+  --u: 1px;
+  --hfs: 72px;
+  --ic: 44px;
+
+  position: relative;
+  width: 100%;
+  /* Sits directly under the site header, which <main> already pads for. */
+  height: calc(100svh - 64px);
+  background: var(--wall, #f3f0e9);
+  overflow: hidden;
+  color: var(--ink, #29211d);
+  -webkit-font-smoothing: antialiased;
+  isolation: isolate;
+}
+
+@media (min-width: 1024px) {
+  .op {
+    height: calc(100svh - 72px);
+  }
+}
+
+/* --------------------------------------------------------------- headline */
+
+.op-headline {
+  position: absolute;
+  top: 41%;
+  left: 0;
+  right: 0;
+  height: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  pointer-events: none;
+  font-family: "Oswald", "Arial Narrow", sans-serif;
+  font-size: var(--hfs);
+  font-weight: 600;
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--ink, #29211d);
+  white-space: nowrap;
+}
+
+.op-line {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+/* Hidden copy of the headline, used to fit the marks to the viewport. */
+.op-measure {
+  position: absolute;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+  pointer-events: none;
+  white-space: nowrap;
+  font: inherit;
+  letter-spacing: -0.01em;
+}
+
+.op-word {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.op-char {
+  display: none;
+}
+
+.op-char.is-on {
+  display: inline-block;
+  animation: op-wipe-in 0.128s cubic-bezier(0.25, 0.75, 0.2, 1) 0.07s both;
+}
+
+.op-char.op-space {
+  width: 0.24em;
+}
+
+@keyframes op-wipe-in {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* ------------------------------------------------------------------ icons */
+
+.op-icons {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--ic) * 0.2);
+  margin-left: calc(var(--ic) * 1.6);
+  transition: margin-left 0.3s cubic-bezier(0.25, 0.75, 0.2, 1);
+}
+
+/* The marks have all folded into the letters: close their lead-in gap. */
+.op.is-done .op-icons {
+  margin: 0;
+}
+
+/*
+ * Portrait phones cannot hold the headline and the seven marks on one line
+ * at the brand scale, so the marks sit above the statement instead. The
+ * sequence, timings and morph are unchanged.
+ */
+@media (max-width: 819px) and (orientation: portrait) {
+  .op-line {
+    flex-direction: column;
+  }
+
+  .op-icons {
+    order: -1;
+    margin-left: 0;
+    margin-bottom: calc(var(--ic) * 0.55);
+  }
+
+  .op.is-done .op-icons {
+    margin-bottom: 0;
+  }
+}
+
+.op-icon {
+  display: block;
+  flex: 0 0 auto;
+  width: var(--ic);
+  height: var(--ic);
+  transform-origin: 50% 50%;
+}
+
+.op-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* The plane lands on this mark, which only appears at the handoff. */
+.op-icon--first {
+  opacity: 0;
+}
+
+.op-icon--first.is-landed {
+  opacity: 1;
+}
+
+.op-icon.is-morphing {
+  animation: op-ink-out 0.22s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+@keyframes op-ink-out {
+  0% {
+    transform: scale(1, 1) rotate(0deg);
+    filter: brightness(1);
+    opacity: 1;
+  }
+  45% {
+    transform: scale(1.25, 0.16) rotate(-28deg);
+    filter: brightness(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.25, 0.16) rotate(-90deg);
+    filter: brightness(0);
+    opacity: 0;
+  }
+}
+
+/* ------------------------------------------------------------- paper plane */
+
+.op-plane {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(var(--ic) * 0.95);
+  height: calc(var(--ic) * 0.95);
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+  transform-origin: 50% 50%;
+  will-change: transform, opacity;
+}
+
+.op-plane svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ----------------------------------------------------------------- prints */
+
+.op-fan {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.op-print {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--cw, 200px);
+  height: calc(var(--cw, 200px) * 1.32);
+  background: var(--page, #f8f6f0);
+  border: 1px solid rgba(41, 33, 29, 0.18);
+  box-shadow:
+    0 calc(var(--cw, 200px) * 0.035) calc(var(--cw, 200px) * 0.1) rgba(16, 19, 24, 0.18),
+    0 1px 0 rgba(255, 255, 255, 0.4) inset;
+  overflow: hidden;
+  transform: translate3d(var(--x, 0px), var(--y, 100vh), 0) translate(-50%, -50%)
+    rotate(var(--r, 0deg));
+  transition: transform 0.7s cubic-bezier(0.18, 1.15, 0.35, 1);
+  will-change: transform;
+}
+
+.op-print img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Warm print grade, matching the site's film-like photography. */
+  filter: saturate(0.96) contrast(1.02);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .op-char.is-on,
+  .op-icon.is-morphing {
+    animation: none;
+    opacity: 1;
+    clip-path: none;
+    filter: none;
+  }
+
+  .op-print {
+    transition: none;
+  }
+}

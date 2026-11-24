@@ -164,3 +164,92 @@ With `npm run dev` running:
 4. Booking drawer — the line item thumbnail matches.
 5. Home page → click a print — the flyer flies in with the photograph, not the sheet.
 6. Resize to a phone width; if the subject's face is cut, nudge `image_focus.y` up.
+
+---
+
+## 3. The opening hero prints
+
+The home page opens with a fan of six prints that rise beneath the headline. They
+live in their own folder and are not part of the session catalogue:
+
+```
+public/images/hero/print-1.jpg … print-6.jpg
+```
+
+The files currently there are generated stand-ins. Overwrite them with real W4L
+photographs, keeping the six names. No code change is needed for a straight swap —
+only a production build (`npm run build`) to copy the new files into `dist/`.
+
+### Export settings
+
+| Property | Recommendation |
+| --- | --- |
+| Format | JPEG (`.jpg`), sRGB |
+| Crop | portrait **3:4** (e.g. 900 × 1200 px); 880 × 1184 also works |
+| Size | long edge 900–1200 px is plenty — the cards are small on screen |
+| Weight | under ~250 KB each; all six load on the first screen |
+| Grade | the site adds a slight warm film grade, so export natural colour |
+
+A print card is 1 : 1.32, a touch taller than 3:4, and the photo is laid into it with
+`object-fit: cover`. Exporting 3:4 means only a sliver of top or bottom is trimmed;
+leave a little headroom above faces when you crop.
+
+### Order and focal point
+
+The order is set in `src/components/opening/openingAssets.ts`:
+
+```ts
+/**
+ * The six prints in the fan, left to right. To use real W4L photographs,
+ * replace public/images/hero/print-1…6.jpg and keep the order below.
+ */
+export const PRINTS: Print[] = [
+  { src: "/images/hero/print-1.jpg", focus: "50% 38%" }, // portrait, window light
+  { src: "/images/hero/print-6.jpg", focus: "50% 50%" }, // hands and film camera
+  { src: "/images/hero/print-3.jpg", focus: "50% 55%" }, // still life
+  { src: "/images/hero/print-4.jpg", focus: "50% 50%" }, // family on the beach
+  { src: "/images/hero/print-2.jpg", focus: "50% 50%" }, // studio interior
+  { src: "/images/hero/print-5.jpg", focus: "50% 45%" }, // couple at dusk
+];
+```
+
+The array is **left to right in the fan**, which is not the same as file number order —
+the six names are deliberately shuffled so a straight overwrite does not bunch similar
+shots together. Edit this array to reorder, or point an entry at a different file.
+
+`focus` is written straight to the image's CSS `object-position`, so it works like the
+focal point in a photo app:
+
+- First value — horizontal: `0%` left edge, `50%` centred, `100%` right edge.
+- Second value — vertical: `0%` top edge, `50%` centred, `100%` bottom edge.
+- The centre of the crop is pinned to that point; everything outside the 1 : 1.32 card
+  falls away. Only the part where the card is *shorter* than the photo actually moves,
+  so a landscape-shaped subject may need almost no adjustment.
+
+Pick the value by looking at the photo: estimate where the subject's eyes sit as a
+percentage down the frame (a third of the way down is `33%`) and use that as the
+second value. Every mark keeps that guidance in its trailing comment.
+
+| What the shot is | `focus` |
+| --- | --- |
+| Head-and-shoulders portrait | `"50% 32%"` |
+| Full-length portrait | `"50% 55%"` |
+| Subject left of centre | `"38% 45%"` |
+| Subject right of centre | `"68% 45%"` |
+| Flat-lay or still life | `"50% 50%"` |
+| Landscape with an important horizon | `"50% 60%"` |
+
+The prints are decorative (`aria-hidden`, empty `alt`), so they only need to be
+well-framed, not described.
+
+### Check the result
+
+With `npm run dev` running, open `/index` and reload. The fan rises after the
+headline, so watch the final positions rather than the first frame.
+
+1. Each print should read at its intended subject; a cut face means the vertical value
+   is too high or too low.
+2. Narrow the window to a phone width — the fan shrinks and tightens on small screens,
+   which trims more of the sides than desktop does.
+3. Reload with “reduce motion” enabled in the OS. The prints then appear straight in
+   their final positions with no animation, which is the quickest way to judge framing.
