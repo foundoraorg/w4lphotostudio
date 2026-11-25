@@ -4,6 +4,7 @@ import { ArrowRight } from "../components/Icons";
 import { GalleryCanvas, type GalleryHandle } from "../components/gallery3d/GalleryCanvas";
 import { useFlyer } from "../components/gallery3d/FlyerContext";
 import { OpeningHero } from "../components/opening/OpeningHero";
+import ScrollStory from "../components/story/ScrollStory";
 import { PrintImage } from "../components/ui/PrintImage";
 import { sessionImage } from "../lib/images";
 import { Reveal } from "../components/ui/Reveal";
@@ -36,6 +37,8 @@ export function Home() {
   return (
     <>
       <OpeningHero />
+
+      <ScrollStory />
 
       <section
         className="relative h-[calc(100svh-4rem)] min-h-[540px] overflow-hidden bg-wall lg:h-[calc(100svh-72px)]"

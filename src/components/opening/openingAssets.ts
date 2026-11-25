@@ -136,12 +136,12 @@ export interface Print {
  * replace public/images/hero/print-1…6.jpg and keep the order below.
  */
 export const PRINTS: Print[] = [
-  { src: "/images/hero/print-1.jpg", focus: "50% 38%" }, // portrait, window light
-  { src: "/images/hero/print-6.jpg", focus: "50% 50%" }, // hands and film camera
-  { src: "/images/hero/print-3.jpg", focus: "50% 55%" }, // still life
-  { src: "/images/hero/print-4.jpg", focus: "50% 50%" }, // family on the beach
+  { src: "/images/hero/print-1.jpg", focus: "50% 32%" }, // portrait, window light
+  { src: "/images/hero/print-6.jpg", focus: "50% 45%" }, // hands and film camera
+  { src: "/images/hero/print-3.jpg", focus: "50% 50%" }, // still life
+  { src: "/images/hero/print-4.jpg", focus: "50% 42%" }, // family on the beach
   { src: "/images/hero/print-2.jpg", focus: "50% 50%" }, // studio interior
-  { src: "/images/hero/print-5.jpg", focus: "50% 45%" }, // couple at dusk
+  { src: "/images/hero/print-5.jpg", focus: "50% 35%" }, // couple at dusk
 ];
 
 /* --------------------------------------------------------------- metrics */

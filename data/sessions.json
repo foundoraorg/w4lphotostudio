@@ -16,7 +16,13 @@
         "h": 0.3333333333333333
       },
       "sort_order": 1,
-      "active": true
+      "active": true,
+      "image": "studio-portrait.jpg",
+      "image_alt": "Portrait of a woman in warm window light at W4L Studios",
+      "image_focus": {
+        "x": 0.5,
+        "y": 0.32
+      }
     },
     {
       "id": "family-story",
@@ -34,7 +40,13 @@
         "h": 0.3333333333333333
       },
       "sort_order": 2,
-      "active": true
+      "active": true,
+      "image": "family-story.jpg",
+      "image_alt": "Family of four on a Watamu beach at golden hour",
+      "image_focus": {
+        "x": 0.5,
+        "y": 0.45
+      }
     },
     {
       "id": "couples-engagement",
@@ -52,7 +64,13 @@
         "h": 0.3333333333333333
       },
       "sort_order": 3,
-      "active": true
+      "active": true,
+      "image": "couples-engagement.jpg",
+      "image_alt": "Couple embracing on a Watamu beach at dusk",
+      "image_focus": {
+        "x": 0.5,
+        "y": 0.28
+      }
     },
     {
       "id": "corporate-headshots",
@@ -70,7 +88,13 @@
         "h": 0.3333333333333333
       },
       "sort_order": 4,
-      "active": true
+      "active": true,
+      "image": "corporate-headshots.jpg",
+      "image_alt": "Professional headshot in a clean studio",
+      "image_focus": {
+        "x": 0.5,
+        "y": 0.32
+      }
     },
     {
       "id": "product-packshot",
@@ -88,7 +112,13 @@
         "h": 0.3333333333333333
       },
       "sort_order": 5,
-      "active": true
+      "active": true,
+      "image": "product-packshot.jpg",
+      "image_alt": "Handmade ceramic vase on a warm neutral backdrop",
+      "image_focus": {
+        "x": 0.5,
+        "y": 0.5
+      }
     },
     {
       "id": "fashion-editorial",
@@ -106,7 +136,13 @@
         "h": 0.3333333333333333
       },
       "sort_order": 6,
-      "active": true
+      "active": true,
+      "image": "fashion-editorial.jpg",
+      "image_alt": "Fashion editorial portrait on the Watamu coast",
+      "image_focus": {
+        "x": 0.5,
+        "y": 0.35
+      }
     },
     {
       "id": "maternity-glow",
@@ -124,7 +160,13 @@
         "h": 0.3333333333333333
       },
       "sort_order": 7,
-      "active": true
+      "active": true,
+      "image": "maternity-glow.jpg",
+      "image_alt": "Maternity portrait in soft window light",
+      "image_focus": {
+        "x": 0.5,
+        "y": 0.38
+      }
     },
     {
       "id": "kids-newborn",
@@ -142,7 +184,13 @@
         "h": 0.3333333333333333
       },
       "sort_order": 8,
-      "active": true
+      "active": true,
+      "image": "kids-newborn.jpg",
+      "image_alt": "Newborn baby asleep in soft natural light",
+      "image_focus": {
+        "x": 0.5,
+        "y": 0.4
+      }
     },
     {
       "id": "brand-content-day",
@@ -160,7 +208,13 @@
         "h": 0.3333333333333333
       },
       "sort_order": 9,
-      "active": true
+      "active": true,
+      "image": "brand-content-day.jpg",
+      "image_alt": "Brand content shoot on a styled studio set",
+      "image_focus": {
+        "x": 0.5,
+        "y": 0.4
+      }
     }
   ],
   "pricingConfig": {

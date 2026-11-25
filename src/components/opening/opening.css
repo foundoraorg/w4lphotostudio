@@ -142,6 +142,36 @@
   width: var(--ic);
   height: var(--ic);
   transform-origin: 50% 50%;
+  opacity: 0;
+}
+
+/*
+ * The plane is replaced by the first mark, then the rest pop in to its right
+ * at 0.03 s + 0.07 s each, so the row assembles after the flight instead of
+ * arriving with the page.
+ */
+.op-icons.is-up .op-icon {
+  animation: op-pop 0.32s cubic-bezier(0.18, 1.15, 0.35, 1) both;
+  animation-delay: calc(0.03s + (var(--i, 0) - 1) * 0.07s);
+}
+
+.op-icons.is-up .op-icon--first {
+  animation-delay: 0s;
+}
+
+@keyframes op-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  /* The fade finishes well before the scale settles. */
+  37.5% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .op-icon svg {

@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, type CSSProperties } from "react";
 import { PaperPlane } from "./PaperPlane";
 import { PixelIcon } from "./PixelIcon";
 import { PrintFan } from "./PrintFan";
@@ -96,16 +96,20 @@ export function OpeningHero() {
     const root = rootRef.current;
     if (!root) return;
 
+    const head = root.querySelector<HTMLElement>(".op-headline");
     const line = root.querySelector<HTMLElement>(".op-line");
     const plane = root.querySelector<HTMLElement>(".op-plane");
+    const iconRow = root.querySelector<HTMLElement>(".op-icons");
     const fan = root.querySelector<HTMLElement>(".op-fan");
     const letters = Array.from(root.querySelectorAll<HTMLElement>(".op-char"));
     const measure = root.querySelector<HTMLElement>(".op-measure");
     const icons = Array.from(root.querySelectorAll<HTMLElement>(".op-icon"));
     const prints = Array.from(root.querySelectorAll<HTMLElement>(".op-print"));
     if (
+      !head ||
       !line ||
       !plane ||
+      !iconRow ||
       !fan ||
       !measure ||
       letters.length !== HEADLINE.length ||
@@ -160,7 +164,7 @@ export function OpeningHero() {
         const print = prints[index];
         setVar(print, "--x", `${slot.x}px`);
         setVar(print, "--y", `${initial ? metrics.H + layout.cw * 1.2 : slot.y}px`);
-        setVar(print, "--r", `${initial ? 7 : slot.rotation}deg`);
+        setVar(print, "--r", `${initial ? 8 : slot.rotation}deg`);
       });
       // Commit the start transform before the transition is allowed back on.
       void fan.offsetHeight;
@@ -279,11 +283,12 @@ export function OpeningHero() {
         plane.style.opacity = `${1 - fade}`;
         plane.style.transform =
           `translate3d(${x - size / 2}px, ${y - size / 2}px, 0) ` +
-          `rotate(${rotation}deg) scale(${1 - 0.45 * fade})`;
+          `rotate(${rotation}deg) scale(${1 - 0.4 * fade})`;
 
         if (!landed && t >= PLANE_LAND) {
           landed = true;
           icons[0].classList.add("is-landed");
+          iconRow.classList.add("is-up");
         }
       }
 
@@ -316,6 +321,7 @@ export function OpeningHero() {
     const resetDom = () => {
       line.style.transition = "none";
       line.style.transform = "translateX(0)";
+      iconRow.classList.remove("is-up");
       letters.forEach((letter) => letter.classList.remove("is-on"));
       icons.forEach((icon) => {
         icon.classList.remove("is-morphing", "is-landed");
@@ -330,8 +336,30 @@ export function OpeningHero() {
       landing = null;
     };
 
+    /*
+     * The hero scrolls away 1:1. Holding the headline at full strength would
+     * let it slide under the fixed header, so it fades out over the last
+     * 1.35 headline-heights before it reaches the nav.
+     */
+    const navEl = document.querySelector<HTMLElement>("header");
+    let fadeFrame = 0;
+    const updateFade = () => {
+      fadeFrame = 0;
+      const navH = navEl?.getBoundingClientRect().height ?? 64;
+      const top = head.getBoundingClientRect().top;
+      const from = navH + metrics.hfs * 1.9;
+      const to = navH + metrics.hfs * 0.55;
+      const fade = Math.min(1, Math.max(0, (top - to) / (from - to)));
+      head.style.opacity = `${fade}`;
+    };
+    const onScroll = () => {
+      if (fadeFrame) return;
+      fadeFrame = requestAnimationFrame(updateFade);
+    };
+
     const onResize = () => {
       applyMetrics();
+      updateFade();
       landing = null;
       if (reduced) {
         finishInstantly();
@@ -344,6 +372,8 @@ export function OpeningHero() {
 
     applyMetrics();
     resetDom();
+    updateFade();
+    window.addEventListener("scroll", onScroll, { passive: true });
 
     if (reduced) {
       finishInstantly();
@@ -351,7 +381,9 @@ export function OpeningHero() {
       return () => {
         alive = false;
         timers.forEach((id) => window.clearTimeout(id));
+        if (fadeFrame) cancelAnimationFrame(fadeFrame);
         window.removeEventListener("resize", onResize);
+        window.removeEventListener("scroll", onScroll);
       };
     }
 
@@ -377,8 +409,10 @@ export function OpeningHero() {
     return () => {
       alive = false;
       cancelAnimationFrame(frame);
+      if (fadeFrame) cancelAnimationFrame(fadeFrame);
       timers.forEach((id) => window.clearTimeout(id));
       window.removeEventListener("resize", onResize);
+      window.removeEventListener("scroll", onScroll);
     };
   }, []);
 
@@ -403,6 +437,7 @@ export function OpeningHero() {
               <span
                 key={`icon-${index}`}
                 className={index === 0 ? "op-icon op-icon--first" : "op-icon"}
+                style={{ "--i": index } as CSSProperties}
               >
                 <PixelIcon map={map} />
               </span>
