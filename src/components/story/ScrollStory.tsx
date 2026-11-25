@@ -8,6 +8,10 @@ const CARD_COUNT = 12;
 /** Cards are 150px wide on desktop and 110px on phones. */
 const CARD_SIZES = "(min-width: 820px) 160px, 120px";
 
+const DAWN_SRC = "/images/dawn/dawn.jpg";
+const DAWN_ALT = "First light over the Indian Ocean at Watamu, before sunrise";
+const DAWN_SOURCE = responsiveSource(DAWN_SRC, "100vw");
+
 /** The wheel repeats the six prints; each card is resolved once, not per frame. */
 const CARDS = Array.from({ length: CARD_COUNT }, (_, i) => {
   const print = PRINTS[i % PRINTS.length];
@@ -125,23 +129,32 @@ export function CardWheel() {
 
 interface Cloud { x: number; y: number; w: number; h: number; speed: number; alpha: number; puffs: { dx: number; dy: number; r: number }[] }
 
+const CLOUD_COUNT = 5;
+const CLOUD_BLUR = 18;
+
+/**
+ * A thin band of drifting haze, sized relative to the viewport so it reads the
+ * same on a phone as on a wide screen. The puffs are drawn blurred: over a
+ * photograph, hard-edged discs look like decoration rather than weather.
+ */
 function makeClouds(W: number, H: number): Cloud[] {
   const clouds: Cloud[] = [];
-  for (let i = 0; i < 6; i++) {
-    const w = 120 + (i * 47) % 180;
-    const h = w * (0.32 + ((i * 13) % 10) / 40);
-    const n = 4 + (i % 3);
+  for (let i = 0; i < CLOUD_COUNT; i++) {
+    const w = W * (0.26 + ((i * 7) % 4) * 0.06);
+    const h = w * 0.2;
+    const n = 5 + (i % 3);
     const puffs = Array.from({ length: n }, (_, j) => ({
-      dx: (j - (n - 1) / 2) * (w / (n + 1)),
-      dy: ((j * 17) % 7) - 3,
-      r: h * (0.55 + ((j * 11) % 5) / 10),
+      dx: (j - (n - 1) / 2) * (w / (n + 2)),
+      dy: ((j * 13) % 9) - 4,
+      r: h * (0.5 + ((j * 7) % 4) / 10),
     }));
     clouds.push({
-      x: (i / 6) * (W + 200) - 100,
-      y: H * (0.12 + ((i * 23) % 70) / 100),
+      x: (i / CLOUD_COUNT) * (W + w) - w / 2,
+      // Kept in the sky, away from the water.
+      y: H * (0.1 + ((i * 23) % 42) / 100),
       w, h,
-      speed: 0.18 + ((i * 7) % 5) * 0.06,
-      alpha: 0.55 + ((i * 11) % 4) * 0.08,
+      speed: 0.1 + ((i * 7) % 4) * 0.035,
+      alpha: 0.16 + ((i * 11) % 3) * 0.05,
       puffs,
     });
   }
@@ -150,14 +163,14 @@ function makeClouds(W: number, H: number): Cloud[] {
 
 export function DawnSky() {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const cameraRef = useRef<HTMLDivElement | null>(null);
+  const frameRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
-    const camera = cameraRef.current;
+    const photo = frameRef.current;
     const canvas = canvasRef.current;
-    if (!section || !camera || !canvas) return;
+    if (!section || !photo || !canvas) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
@@ -179,16 +192,18 @@ export function DawnSky() {
 
     const draw = () => {
       ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = "#f8f6f0";
+      ctx.filter = `blur(${CLOUD_BLUR}px)`;
       for (const c of clouds) {
         ctx.globalAlpha = c.alpha;
-        ctx.fillStyle = "#f8f6f0";
         for (const p of c.puffs) {
           ctx.beginPath();
           ctx.arc(c.x + p.dx, c.y + p.dy, p.r, 0, Math.PI * 2);
           ctx.fill();
         }
-        ctx.globalAlpha = 1;
       }
+      ctx.globalAlpha = 1;
+      ctx.filter = "none";
     };
 
     const step = () => {
@@ -203,11 +218,10 @@ export function DawnSky() {
       raf = requestAnimationFrame(step);
     };
 
+    // A slow push into the horizon, lifting a little as it goes. The frame is
+    // oversized (inset -8%) so the move never reveals an edge.
     const applyCamera = (p: number) => {
-      const scale = 0.55 + p * 1.15;
-      const opacity = 0.35 + (1 - Math.abs(p - 0.5) * 2) * 0.65;
-      camera.style.transform = `translate(-50%, -50%) scale(${scale})`;
-      camera.style.opacity = String(clamp(opacity, 0.35, 1));
+      photo.style.transform = `translate3d(0, ${(-p * 2.5).toFixed(2)}%, 0) scale(${(1 + p * 0.42).toFixed(3)})`;
     };
 
     const onScroll = () => {
@@ -220,7 +234,7 @@ export function DawnSky() {
     resize();
     if (reduced) {
       draw();
-      applyCamera(0.5);
+      applyCamera(0.45);
       const onResize = () => { resize(); draw(); };
       window.addEventListener("resize", onResize);
       return () => window.removeEventListener("resize", onResize);
@@ -245,16 +259,20 @@ export function DawnSky() {
   return (
     <section ref={sectionRef} className="ss-dawn" aria-label="Dawn sky">
       <div className="ss-dawn__sticky">
+        <div ref={frameRef} className="ss-dawn__frame">
+          <img
+            src={DAWN_SRC}
+            srcSet={DAWN_SOURCE.srcSet}
+            sizes={DAWN_SOURCE.sizes}
+            width={DAWN_SOURCE.width}
+            height={DAWN_SOURCE.height}
+            alt={DAWN_ALT}
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
         <div className="ss-dawn__sky" aria-hidden="true">
           <canvas ref={canvasRef} className="ss-dawn__canvas" />
-        </div>
-        <div ref={cameraRef} className="ss-dawn__camera" aria-hidden="true">
-          <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
-            <rect x="3" y="6" width="18" height="13" rx="2" />
-            <circle cx="12" cy="12.5" r="3.5" />
-            <path d="M8 6l1.5-2h5L16 6" />
-            <circle cx="17.5" cy="8.5" r="0.8" fill="currentColor" />
-          </svg>
         </div>
         <div className="ss-dawn__copy">
           <p className="kicker">Dawn, Watamu</p>

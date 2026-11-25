@@ -86,8 +86,10 @@
 .ss-dawn {
   position: relative;
   height: 220vh;
+  /* The colour the photograph loads into, so the panel is never blank. */
   background: #efe4d3;
-  overflow: hidden;
+  /* No overflow here: clipping on the section would make it the scrollport and
+     the sticky child would scroll away instead of pinning. */
   color: var(--ink, #29211d);
 }
 
@@ -98,10 +100,33 @@
   overflow: hidden;
 }
 
+/* The photograph the scroll pushes into. Oversized so the zoom and lift
+   never expose an edge. */
+.ss-dawn__frame {
+  position: absolute;
+  inset: -8%;
+  z-index: 1;
+  transform-origin: 50% 56%;
+  will-change: transform;
+}
+
+.ss-dawn__frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* A portrait phone crops the landscape frame to its centre, which is all water
+   and sky. Bias the crop left so the palms and the wall stay in shot. */
+@media (max-width: 819px) {
+  .ss-dawn__frame img { object-position: 22% 58%; }
+}
+
 .ss-dawn__sky {
   position: absolute;
   inset: 0;
-  background: #efe4d3;
+  z-index: 2;
 }
 
 .ss-dawn__canvas {
@@ -112,24 +137,15 @@
   pointer-events: none;
 }
 
-.ss-dawn__camera {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(1);
-  transform-origin: 50% 50%;
-  color: var(--ink, #29211d);
-  will-change: transform, opacity;
-  z-index: 2;
-}
-
-.ss-dawn__camera svg { display: block; }
-
+/* Copy sits in the pale band of sky, not over the darker water. On a short
+   viewport 15vh lands under the fixed header, so the top edge is clamped to
+   clear it (64px header below 1024px, 72px above). */
 .ss-dawn__copy {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 10vh;
+  top: max(15vh, calc(4rem + 16px));
+  padding: 0 5vw;
   text-align: center;
   z-index: 3;
   pointer-events: none;
@@ -145,6 +161,10 @@
   line-height: 0.9;
   letter-spacing: -0.01em;
   text-transform: uppercase;
+}
+
+@media (min-width: 1024px) {
+  .ss-dawn__copy { top: max(15vh, calc(72px + 20px)); }
 }
 
 

@@ -30,7 +30,7 @@ except ImportError:  # pragma: no cover - developer-facing message
 
 ROOT = Path(__file__).resolve().parent.parent
 PUBLIC = ROOT / "public"
-DIRECTORIES = ("public/images/hero", "public/images/sessions")
+DIRECTORIES = ("public/images/hero", "public/images/sessions", "public/images/dawn")
 WIDTHS = (320, 480, 800)
 QUALITY = 82
 MANIFEST = ROOT / "src/lib/imageManifest.json"

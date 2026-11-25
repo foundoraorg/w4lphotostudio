@@ -272,7 +272,8 @@ python3 -m pip install pillow     # once: a build-time tool, not a site dependen
 python3 scripts/export-images.py
 ```
 
-It reads every `.jpg` in `public/images/hero` and `public/images/sessions` and writes:
+It reads every `.jpg` in `public/images/hero`, `public/images/sessions` and
+`public/images/dawn` and writes:
 
 | Output | Width | Used for |
 | --- | --- | --- |
@@ -310,3 +311,20 @@ the step — is served at full size. Nothing breaks; it is just heavier.
 If you add a new image folder, add it to `DIRECTORIES` at the top of
 `scripts/export-images.py` and give the new `<img>` a `sizes` value that matches how
 wide it actually renders.
+
+---
+
+## 5. The dawn panel
+
+Between the print wheel and the manifesto, the story pushes into a single
+full-screen photograph:
+
+```
+public/images/dawn/dawn.jpg
+```
+
+It is crop-unforgiving — `object-fit: cover` at a 16:9-ish shape, then scaled up by
+up to 1.42× as you scroll — so export it landscape (3:2 or 16:9), long edge at least
+1600 px, and keep the horizon a little below centre so the copy sits in clear sky
+above it. The alt text lives in `ScrollStory.tsx` (`DAWN_ALT`); update it if the
+photograph changes meaningfully. Run the export step afterwards as usual.
