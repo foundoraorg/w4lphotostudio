@@ -54,6 +54,7 @@ export function Studio() {
                 session={heroSession}
                 alt={`${heroSession.title} at W4L Studios`}
                 className="h-full w-full"
+                sizes="100vw"
               />
             )}
           </div>

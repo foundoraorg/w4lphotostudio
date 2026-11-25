@@ -79,7 +79,7 @@ export function Estimate() {
           </Link>
 
           <div className="mt-6 flex items-start gap-4 border border-line bg-page p-3">
-            <PrintImage session={active} alt={`${active.title} session`} className="h-24 w-20 shrink-0" />
+            <PrintImage session={active} alt={`${active.title} session`} className="h-24 w-20 shrink-0" sizes="80px" />
             <div className="min-w-0 py-1">
               <p className="font-display text-[15px] uppercase tracking-[0.03em]">{active.title}</p>
               <p className="micro mt-1">

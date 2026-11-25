@@ -13,7 +13,7 @@ export function SessionCard({ session, priority = false }: { session: Session; p
           session={session}
           alt={`${session.title} — ${session.category} photography session`}
           className="aspect-[4/5] w-full transition-transform duration-700 group-hover:scale-[1.03]"
-          sizes={priority ? "(min-width: 1024px) 33vw, 50vw" : undefined}
+          sizes={priority ? "(min-width: 1024px) 33vw, 50vw" : "(min-width: 768px) 33vw, 50vw"}
         />
         <span className="absolute bottom-3 left-3 hidden items-center gap-1 border border-ink bg-accent px-2.5 py-1.5 font-display text-[11px] uppercase tracking-[0.12em] text-ink opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:flex">
           Book

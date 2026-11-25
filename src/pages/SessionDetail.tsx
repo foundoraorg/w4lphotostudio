@@ -145,6 +145,7 @@ function SessionView({ session }: { session: Session }) {
               session={session}
               alt={`${session.title} — ${session.category} photography by W4L Studios`}
               className="aspect-[4/5] w-full"
+              sizes="(min-width: 1024px) 46vw, 100vw"
             />
             <span className="absolute bottom-3 left-3 bg-wall/90 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em]">
               {session.category} · Watamu
@@ -226,6 +227,7 @@ function SessionView({ session }: { session: Session }) {
                 session={item}
                 alt={`${item.title} session`}
                 className="aspect-[4/5] w-full transition-transform duration-500 group-hover:scale-[1.02]"
+                sizes="(min-width: 640px) 25vw, 50vw"
               />
               <h3 className="mt-2 font-display text-[13px] uppercase tracking-[0.02em]">{item.title}</h3>
               <p className="micro mt-0.5">From {fmt(item.base_price_kes)}</p>

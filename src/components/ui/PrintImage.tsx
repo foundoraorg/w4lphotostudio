@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { ImageCrop, Session } from "../../lib/config";
 import { focusStyle, sessionImage } from "../../lib/images";
+import { responsiveSource } from "../../lib/responsive";
 import { cropStyle, loadSheet, placeholderSheetUrl, sheetCell } from "../../lib/portfolio";
 
 interface PrintImageProps {
@@ -38,13 +39,17 @@ export function PrintImage({ session, crop, alt, className = "", sizes, eager = 
   }, []);
 
   if (photo) {
+    const responsive = responsiveSource(photo.url, sizes ?? "50vw");
     return (
       <img
         src={photo.url}
+        srcSet={responsive.srcSet}
+        sizes={responsive.sizes}
+        width={responsive.width}
+        height={responsive.height}
         alt={alt || photo.alt}
         loading={eager ? "eager" : "lazy"}
         decoding="async"
-        data-sizes={sizes}
         onError={() => setPhotoFailed(true)}
         className={`object-cover ${className}`}
         style={focusStyle(photo.focus)}
@@ -56,7 +61,6 @@ export function PrintImage({ session, crop, alt, className = "", sizes, eager = 
     <div
       role="img"
       aria-label={alt || image?.alt || "Session photograph"}
-      data-sizes={sizes}
       className={`bg-cover ${className}`}
       style={cropStyle(fallbackCrop, sheetUrl)}
     />

@@ -53,6 +53,7 @@ export function Home() {
                     session={session}
                     alt={`${session.title} — ${session.category} session photograph`}
                     className="aspect-[3/4] w-full"
+                    sizes="(min-width: 768px) 33vw, 50vw"
                   />
                   <div className="mt-3 flex items-start justify-between gap-2">
                     <div>
@@ -216,6 +217,7 @@ export function Home() {
                     session={session}
                     alt={`${session.title} session`}
                     className="aspect-[4/5] w-full transition-transform duration-700 group-hover:scale-[1.03]"
+                    sizes="(min-width: 768px) 33vw, 50vw"
                   />
                 </div>
                 <div className="mt-3 flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">

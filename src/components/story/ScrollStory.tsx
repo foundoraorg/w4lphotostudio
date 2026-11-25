@@ -1,8 +1,18 @@
 import { useEffect, useRef } from "react";
 import { PRINTS } from "../opening/openingAssets";
+import { responsiveSource } from "../../lib/responsive";
 import "./story.css";
 
 const CARD_COUNT = 12;
+
+/** Cards are 150px wide on desktop and 110px on phones. */
+const CARD_SIZES = "(min-width: 820px) 160px, 120px";
+
+/** The wheel repeats the six prints; each card is resolved once, not per frame. */
+const CARDS = Array.from({ length: CARD_COUNT }, (_, i) => {
+  const print = PRINTS[i % PRINTS.length];
+  return { print, ...responsiveSource(print.src, CARD_SIZES) };
+});
 
 const clamp = (v: number, a: number, b: number) => Math.min(b, Math.max(a, v));
 
@@ -94,9 +104,17 @@ export function CardWheel() {
           <p className="ss-cards__kicker">The index</p>
           <h2 className="ss-cards__title">Twelve prints, one wheel</h2>
         </div>
-        {Array.from({ length: CARD_COUNT }, (_, i) => (
+        {CARDS.map(({ print, ...responsive }, i) => (
           <div key={i} ref={(el) => { cardRefs.current[i] = el; }} className="ss-card">
-            <img src={PRINTS[i % PRINTS.length].src} alt="" loading="lazy" />
+            <img
+              src={print.src}
+              srcSet={responsive.srcSet}
+              sizes={responsive.sizes}
+              width={responsive.width}
+              height={responsive.height}
+              alt=""
+              loading="lazy"
+            />
             <span className="ss-card__num">{String(i + 1).padStart(2, "0")}</span>
           </div>
         ))}

@@ -36,6 +36,11 @@ public/images/sessions/
 The folder already exists. Anything in `public/` is served from the site root, so
 `public/images/sessions/studio-portrait.jpg` is available at `/images/sessions/studio-portrait.jpg`.
 
+Export the phone-sized copies once the file is in place — see
+[section 4](#4-responsive-sizes). Without that step the full-size file is still
+served, so it is the difference between a 25 KB and a 120 KB download, not a
+broken page.
+
 ### Step 2 — Set the session's image fields
 
 Open `data/sessions.json` and add three fields to the session you are illustrating
@@ -178,7 +183,8 @@ public/images/hero/print-1.jpg … print-6.jpg
 
 The files currently there are generated stand-ins. Overwrite them with real W4L
 photographs, keeping the six names. No code change is needed for a straight swap —
-only a production build (`npm run build`) to copy the new files into `dist/`.
+run the [export step](#4-responsive-sizes), then a production build (`npm run build`)
+to copy the new files into `dist/`.
 
 ### Export settings
 
@@ -253,3 +259,54 @@ headline, so watch the final positions rather than the first frame.
    which trims more of the sides than desktop does.
 3. Reload with “reduce motion” enabled in the OS. The prints then appear straight in
    their final positions with no animation, which is the quickest way to judge framing.
+
+---
+
+## 4. Responsive sizes
+
+A phone should not download an 880 px file to fill a 110 px card. Before you ship a
+new or replaced photograph, run the export step once on your machine:
+
+```bash
+python3 -m pip install pillow     # once: a build-time tool, not a site dependency
+python3 scripts/export-images.py
+```
+
+It reads every `.jpg` in `public/images/hero` and `public/images/sessions` and writes:
+
+| Output | Width | Used for |
+| --- | --- | --- |
+| `print-1-320.jpg` | 320 px | phones, the small story and drawer thumbnails |
+| `print-1-480.jpg` | 480 px | a phone at 2×, a tablet |
+| `print-1-800.jpg` | 800 px | a large card at 2× |
+| `src/lib/imageManifest.json` | — | the original pixel size of each photo |
+
+The rules it follows:
+
+- It never upscales: a file narrower than a target width simply skips that width.
+- It ignores files it wrote itself, so re-running is safe and idempotent.
+- The original stays untouched and remains the widest `srcset` candidate.
+- Output is JPEG at quality 82, progressive — typically a fifth of the original weight.
+
+Commit the new files together with the photograph. `src/lib/responsive.ts` reads the
+manifest and emits `srcSet`, `sizes`, `width` and `height` for each `<img>`, so the
+browser picks the smallest file that fits and reserves the frame before it loads.
+
+A photo with no manifest entry — a remote URL, or a file dropped in without running
+the step — is served at full size. Nothing breaks; it is just heavier.
+
+### What `sizes` each surface declares
+
+| Surface | `sizes` |
+| --- | --- |
+| Opening hero prints (`PrintFan`) | `(min-width: 820px) 240px, 40vw` |
+| Scroll-story cards (`ScrollStory`) | `(min-width: 820px) 160px, 120px` |
+| Session cards, home grids | `(min-width: 768px) 33vw, 50vw` |
+| Session page hero | `(min-width: 1024px) 46vw, 100vw` |
+| “More sessions” row | `(min-width: 640px) 25vw, 50vw` |
+| Booking drawer / estimate thumbnail | `64px` / `80px` |
+| Studio page hero | `100vw` |
+
+If you add a new image folder, add it to `DIRECTORIES` at the top of
+`scripts/export-images.py` and give the new `<img>` a `sizes` value that matches how
+wide it actually renders.

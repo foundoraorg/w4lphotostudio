@@ -28,7 +28,12 @@ export function NotFound() {
         </div>
         {sessions[0] && (
           <Link to={`/sessions/${sessions[0].slug}`} className="block">
-            <PrintImage session={sessions[0]} alt={`${sessions[0].title} session`} className="aspect-[3/4] w-full" />
+            <PrintImage
+              session={sessions[0]}
+              alt={`${sessions[0].title} session`}
+              className="aspect-[3/4] w-full"
+              sizes="(min-width: 768px) 33vw, 50vw"
+            />
             <p className="micro mt-3">Or start with {sessions[0].title} →</p>
           </Link>
         )}

@@ -229,6 +229,7 @@ export function BookingDrawer() {
                         crop={{ x: 0, y: 0, w: 1 / 3, h: 1 / 3 }}
                         alt={`${item.title} session`}
                         className="h-[86px] w-16 shrink-0"
+                        sizes="64px"
                       />
                       <div className="min-w-0 flex-1">
                         <div className="flex items-start justify-between gap-2">
