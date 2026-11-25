@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Check, ExternalLink } from "../components/Icons";
 import { Accordion } from "../components/ui/Accordion";
+import { FoundoraLockup } from "../components/Foundora";
 import { CountUp } from "../components/ui/CountUp";
 import { PrintImage } from "../components/ui/PrintImage";
 import { Divider, Reveal } from "../components/ui/Reveal";
@@ -311,7 +312,10 @@ function PartnerBand() {
       <div className="wrap grid gap-10 md:grid-cols-[1fr_1fr] md:items-end">
         <div>
           <p className="kicker !text-accent">Our partner</p>
-          <h2 id="partner-title" className="mt-4 font-display text-[clamp(34px,5vw,64px)] uppercase leading-[0.92] text-wall">
+          <div className="mt-6 bg-wall px-6 py-6 md:px-8 md:py-8">
+            <FoundoraLockup href={data.settings.partnerUrl} className="h-16 w-auto md:h-32" />
+          </div>
+          <h2 id="partner-title" className="mt-8 font-display text-[clamp(34px,5vw,64px)] uppercase leading-[0.92] text-wall">
             Find better.
             <br />
             Live smarter.

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useCatalogue } from "../lib/catalogue";
 import { ArrowRight, ExternalLink, Mail, MapPin, Phone } from "./Icons";
 import { Lockup } from "./Lockup";
+import { FoundoraMark } from "./Foundora";
 import { useToast } from "./ui/Toast";
 
 export function Footer() {
@@ -151,8 +152,17 @@ export function Footer() {
         </div>
 
         <div className="mt-14 flex flex-col gap-4 border-t border-wall/15 pb-12 pr-24 pt-6 sm:flex-row sm:items-center sm:justify-between lg:pb-0 lg:pr-0">
-          <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-wall/40">
-            © {new Date().getFullYear()} W4L Studios · in association with Foundora
+          <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[10px] uppercase tracking-[0.14em] text-wall/40">
+            <span>© {new Date().getFullYear()} W4L Studios · in association with</span>
+            <a
+              href={settings.partnerUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 hover:text-accent"
+            >
+              <FoundoraMark className="h-[11px] w-auto shrink-0" />
+              Foundora
+            </a>
           </p>
           <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-wall/40">
             Watamu · Kilifi · Malindi · Mombasa

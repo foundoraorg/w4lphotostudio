@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { FoundoraWordmark } from "./Foundora";
 
 interface LockupProps {
   to?: string;
@@ -17,9 +18,8 @@ export function Lockup({ to = "/", dark = false, className = "", size = "md" }: 
       </span>
       <span className={`font-mono uppercase tracking-[0.16em] leading-tight ${subSize} ${dark ? "text-wall/60" : "text-muted"}`}>
         in association with{" "}
-        <span className="inline-flex items-center gap-1">
-          <span aria-hidden="true" className="inline-block h-[5px] w-[5px] translate-y-[-1px] rounded-full bg-accent" />
-          FOUNDORA
+        <span className="inline-flex items-center">
+          <FoundoraWordmark className="h-[12px] w-auto translate-y-[1px]" alt="Foundora" />
         </span>
       </span>
     </Link>
